@@ -37,9 +37,7 @@ function App() {
 	};
 
 	const onVideoEnd = event => {
-		const VIDEO_ENDED = 0;
-
-		if (event.data === VIDEO_ENDED) {
+		if (event.data === window.YT.PlayerState.ENDED) {
 			setVideos(prevState => {
 				const newVideos = [...prevState];
 
@@ -58,14 +56,14 @@ function App() {
 	return (
 		<div className='app'>
 			<header className='header'>The best video player app!</header>
-			
+
 			<Form
 				videos={videos}
 				callback={handleSubmit} />
 
 			{!hasVideos &&
 				<div className='empty'>
-					Start adding your favorite videos! 
+					Start adding your favorite videos!
 					{' '}
 					<i className='fab fa-youtube'></i>
 				</div>
