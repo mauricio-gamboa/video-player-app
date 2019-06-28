@@ -5,8 +5,8 @@ import React, { useState } from 'react';
 // https://www.youtube.com/watch?v=p7bfOZek9t4
 
 // Components
-import Video from '../Video/Video';
 import Form from '../Form/Form';
+import Video from '../Video/Video';
 
 function App() {
 	const [videos, setVideos] = useState([]);
@@ -26,12 +26,18 @@ function App() {
 		setVideos(prevState => [...prevState, ...[video.items[0]]]);
 	};
 
-	const handleVideoEnd = () => {
-		setVideos(prevState => {
-			const newVideos = [...prevState];
-			newVideos.shift();
-			return newVideos;
-		});
+	const onVideoEnd = event => {
+		if (event.data === 0) {
+			setVideos(prevState => {
+				const newVideos = [...prevState];
+
+				if (newVideos.length >= 1) {
+					newVideos.shift();
+				}
+
+				return newVideos;
+			});
+		}
 	};
 
 	const hasVideos = videos && videos.length > 0;
@@ -47,8 +53,9 @@ function App() {
 
 			{hasVideos &&
 				<Video
-					id={videos[0].id}
-					videoEndCallBack={handleVideoEnd} />
+					id={'video'}
+					videoId={videos[0].id}
+					onStateChange={onVideoEnd} />
 			}
 
 			{hasQueue &&
