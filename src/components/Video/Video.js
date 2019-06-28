@@ -65,6 +65,8 @@ class Video extends React.Component {
 	render() {
 		return (
 			<div>
+				<p>Title: {this.props.metaData.title}</p>
+				<p>Artists: {this.props.metaData.artist}</p>
 				<div id={this.props.id} ref={container => this.container = container} />
 			</div>
 		);

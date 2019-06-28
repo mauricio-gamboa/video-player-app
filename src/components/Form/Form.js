@@ -1,25 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function Form(props) {
-    const { callback } = props;
     const [artist, setArtist] = useState('');
     const [title, setTitle] = useState('');
     const [url, setUrl] = useState('');
+    const [videoId, setVideoId] = useState('');
     const [errors, setErros] = useState([]);
 
-    const getIdFromUrl = urlString => {
-        if (!urlString) {
-            return false;
-        }
+    useEffect(() => {
+        const getIdFromUrl = () => {
+            if (!url) {
+                return false;
+            }
 
-        const urlObject = new URL(urlString);
-        return urlObject.searchParams.get('v');
-    };
+            const urlObject = new URL(url);
+            return urlObject.searchParams.get('v');
+        };
+
+        const id = getIdFromUrl();
+
+        if (id) {
+            setVideoId(id);
+        }
+    }, [url]);
 
     const resetForm = () => {
         setArtist('');
         setTitle('');
         setUrl('');
+        setVideoId('');
     };
 
     const handleSubmit = async event => {
@@ -29,11 +38,10 @@ function Form(props) {
             return;
         }
 
-        const id = getIdFromUrl(url);
-        const video = await getVideoData(id);
+        const video = await getVideoData(videoId);
 
         resetForm();
-        callback(video);
+        props.callback(video);
     };
 
     const getVideoData = async id => {
@@ -54,27 +62,31 @@ function Form(props) {
         return newData;
     };
 
+    const isAlreadyinQueue = () => {
+        return props.videos.findIndex(video => video.id === videoId) !== -1;
+    }
+
     const hasErrors = () => {
         const liveErrors = [];
 
-        // Artist field is empty
         if (!artist) {
             liveErrors.push('Enter the artist name.');
         }
 
-        // Title field is empty
         if (!title) {
             liveErrors.push('Enter the title of the video.');
         }
 
-        // Url field is empty
         if (!url) {
             liveErrors.push('Enter the URL of the video.');
         }
 
-        // URL is not valid
-        if (!getIdFromUrl(url)) {
+        if (url && !videoId) {
             liveErrors.push('Enter a valid YouTube URL.');
+        }
+
+        if (videoId && isAlreadyinQueue()) {
+            liveErrors.push('The videos is already in the queue.');
         }
 
         setErros(liveErrors);

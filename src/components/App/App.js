@@ -51,7 +51,9 @@ function App() {
 			<p>https://www.youtube.com/watch?v=QYh6mYIJG2Y</p>
 			<p>https://www.youtube.com/watch?v=ptG2ZhCaflw</p>
 
-			<Form callback={handleSubmit} />
+			<Form
+				videos={videos}
+				callback={handleSubmit} />
 
 			{hasVideos &&
 				<Video
