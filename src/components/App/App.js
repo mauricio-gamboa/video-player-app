@@ -27,7 +27,9 @@ function App() {
 	};
 
 	const onVideoEnd = event => {
-		if (event.data === 0) {
+		const VIDEO_ENDED = 0;
+
+		if (event.data === VIDEO_ENDED) {
 			setVideos(prevState => {
 				const newVideos = [...prevState];
 
@@ -55,6 +57,7 @@ function App() {
 				<Video
 					id={'video'}
 					videoId={videos[0].id}
+					metaData={videos[0].metaData}
 					onStateChange={onVideoEnd} />
 			}
 

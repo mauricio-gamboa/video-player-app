@@ -31,7 +31,7 @@ function Form(props) {
 
         const id = getIdFromUrl(url);
         const video = await getVideoData(id);
-        
+
         resetForm();
         callback(video);
     };
@@ -39,7 +39,19 @@ function Form(props) {
     const getVideoData = async id => {
         const res = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id}&key=AIzaSyBikKSktaOVOJp35PAezdVFBEPoikRnmcc`);
         const data = await res.json();
-        return data;
+        insertMetaData(data);
+        return insertMetaData(data);
+    };
+
+    const insertMetaData = data => {
+        const newData = Object.assign({}, data);
+
+        newData.items[0].metaData = {
+            artist: artist,
+            title: title
+        };
+
+        return newData;
     };
 
     const hasErrors = () => {

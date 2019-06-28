@@ -47,9 +47,12 @@ class Video extends React.Component {
 	};
 
 	updatePlayer = () => {
-		this.internalPlayer.getIframe().then((iframe) => {
-			if (this.props.id) iframe.setAttribute('id', this.props.id);
-			else iframe.removeAttribute('id');
+		this.internalPlayer.getIframe().then(iframe => {
+			if (this.props.id) {
+				iframe.setAttribute('id', this.props.id);
+			} else {
+				iframe.removeAttribute('id');
+			}
 		});
 	};
 
@@ -59,14 +62,10 @@ class Video extends React.Component {
 		});
 	};
 
-	refContainer = container => {
-		this.container = container;
-	};
-
 	render() {
 		return (
 			<div>
-				<div id={this.props.id} ref={this.refContainer} />
+				<div id={this.props.id} ref={container => this.container = container} />
 			</div>
 		);
 	}
