@@ -19,8 +19,16 @@ function Form(props) {
                 return false;
             }
 
-            const urlObject = new URL(url);
-            return urlObject.searchParams.get('v');
+            let id;
+
+            try {
+                const urlObject = new URL(url);
+                id = urlObject.searchParams.get('v');
+            } catch (error) {
+                id = '';
+            }
+
+            return id;
         };
 
         const id = getIdFromUrl();
@@ -68,12 +76,12 @@ function Form(props) {
     const hasErrors = () => {
         const liveErrors = [];
 
-        if (!artist) {
-            liveErrors.push('Enter the name of the artist.');
-        }
-
         if (!title) {
             liveErrors.push('Enter the title of the video.');
+        }
+
+        if (!artist) {
+            liveErrors.push('Enter the name of the artist.');
         }
 
         if (!url) {

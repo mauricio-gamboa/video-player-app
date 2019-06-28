@@ -1,6 +1,9 @@
 import React from 'react';
 import youTubePlayer from 'youtube-player';
 
+// CSS
+import './Video.scss';
+
 function shouldUpdateVideo(prevProps, props) {
 	return prevProps.videoId !== props.videoId;
 }
@@ -64,10 +67,17 @@ class Video extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<p>Title: {this.props.metaData.title}</p>
-				<p>Artists: {this.props.metaData.artist}</p>
-				<div id={this.props.id} ref={container => this.container = container} />
+			<div className='video'>
+				<div className='metaData'>
+					<i className='fas fa-music' />
+					{' '}
+					{`Playing ${this.props.metaData.title} by ${this.props.metaData.artist}`}
+					{' '}
+					<i className='fas fa-music' />
+				</div>
+				<div className='videoContainer'>
+					<div id={this.props.id} ref={container => this.container = container} />
+				</div>
 			</div>
 		);
 	}

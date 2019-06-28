@@ -1,0 +1,14 @@
+.thumbnails {
+    overflow: hidden;
+    .thumbnail {
+        float: left;
+        width: 25%;
+        button {
+            width: 100%;
+            padding: 5px;
+            img {
+                width: 100%;
+            }
+        }
+    }
+}
