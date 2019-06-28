@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Components
 import Form from '../Form/Form';
 import Video from '../Video/Video';
 import Thumbnails from '../Thumbnails/Thumbnails';
 
+// Services
+import {
+	getItem,
+	setItem
+} from '../../services/store';
+
 function App() {
-	const [videos, setVideos] = useState([]);
+	const [videos, setVideos] = useState(() => getItem('videos'));
+
+	useEffect(() => {
+		setItem('videos', videos)
+	}, [videos]);
 
 	const handleThumbnailClick = id => {
 		const newVideos = [...videos];
