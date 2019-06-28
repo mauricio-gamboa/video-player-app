@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 // Components
 import Form from '../Form/Form';
 import Video from '../Video/Video';
+import Thumbnails from '../Thumbnails/Thumbnails';
 
 function App() {
 	const [videos, setVideos] = useState([]);
@@ -64,23 +65,9 @@ function App() {
 			}
 
 			{hasQueue &&
-				<ul>
-					{videos.map((video, index) => {
-						if (index === 0) {
-							return null
-						};
-
-						return (
-							<li key={video.id}>
-								<button
-									onClick={() => handleThumbnailClick(video.id)}
-									type='button'>
-									<img alt='' src={video.snippet.thumbnails.default.url} />
-								</button>
-							</li>
-						);
-					})}
-				</ul>
+				<Thumbnails
+					videos={videos}
+					handleClick={handleThumbnailClick} />
 			}
 		</div>
 	);
