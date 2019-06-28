@@ -1,61 +1,71 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 // KEY = AIzaSyBikKSktaOVOJp35PAezdVFBEPoikRnmcc
 // https://www.googleapis.com/youtube/v3/videos?part=snippet&id=ptG2ZhCaflw&key=AIzaSyBikKSktaOVOJp35PAezdVFBEPoikRnmcc
 // https://www.youtube.com/watch?v=p7bfOZek9t4
 
 // Components
-import Video from '../Video/Video'
+import Video from '../Video/Video';
+import Form from '../Form/Form';
 
 function App() {
 	const [videos, setVideos] = useState([]);
-	const [url, setUrl] = useState('');
-	const [errors, setErros] = useState([]);
 
-	const handleOnChange = event => {
-		setUrl(event.target.value);
+	const handleThumbnailClick = id => {
+		const newVideos = [...videos];
+		const videoPosition = videos.findIndex(video => video.id === id);
+		const video = newVideos[videoPosition];
+
+		newVideos.splice(videoPosition, 1);
+		newVideos.splice(0, 1, video);
+
+		setVideos(newVideos);
 	};
 
-	const getIdFromUrl = urlString => {
-		const url = new URL(urlString);
-		return url.searchParams.get('v');
-	};
-
-	const handleSubmit = async event => {
-		event.preventDefault();
-		const id = getIdFromUrl(url);
-		const video = await getVideoData(id);
+	const handleSubmit = video => {
 		setVideos(prevState => [...prevState, ...[video.items[0]]]);
 	};
 
-	const getVideoData = async id => {
-		const res = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id}&key=AIzaSyBikKSktaOVOJp35PAezdVFBEPoikRnmcc`);
-		const data = await res.json();
-		return data;
+	const handleVideoEnd = () => {
+		setVideos(prevState => {
+			const newVideos = [...prevState];
+			newVideos.shift();
+			return newVideos;
+		});
 	};
+
+	const hasVideos = videos && videos.length > 0;
+	const hasQueue = videos && videos.length > 1;
 
 	return (
 		<div className='app'>
-			<form
-				onSubmit={handleSubmit}>
-				<fieldset className='box'>
-					<input
-						type='url'
-						name='url'
-						value={url}
-						onChange={handleOnChange}
-						placeholder='URL of the YouTube Video' />
-				</fieldset>
-				<fieldset className='box'>
-					<button type='submit'>Add to queue!</button>
-				</fieldset>
-			</form>
-			{videos && videos.length > 0 && <Video id={videos[0].id} />}
-			{videos && videos.length > 0 &&
+			<p>https://www.youtube.com/watch?v=p7bfOZek9t4</p>
+			<p>https://www.youtube.com/watch?v=QYh6mYIJG2Y</p>
+			<p>https://www.youtube.com/watch?v=ptG2ZhCaflw</p>
+
+			<Form callback={handleSubmit} />
+
+			{hasVideos &&
+				<Video
+					id={videos[0].id}
+					videoEndCallBack={handleVideoEnd} />
+			}
+
+			{hasQueue &&
 				<ul>
-					{videos.map(video => {
+					{videos.map((video, index) => {
+						if (index === 0) {
+							return null
+						};
+
 						return (
-							<li key={video.id}><img src={video.snippet.thumbnails.default.url} /></li>
+							<li key={video.id}>
+								<button
+									onClick={() => handleThumbnailClick(video.id)}
+									type='button'>
+									<img alt='' src={video.snippet.thumbnails.default.url} />
+								</button>
+							</li>
 						);
 					})}
 				</ul>
