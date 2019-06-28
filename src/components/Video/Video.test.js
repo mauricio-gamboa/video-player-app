@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Video from './Video';
 
-describe('App', () => {
+describe('Video', () => {
 	test('renders without crashing (smoke test)', () => {
 		const div = document.createElement('div');
-		ReactDOM.render(<App />, div);
+		ReactDOM.render(<Video />, div);
 		ReactDOM.unmountComponentAtNode(div);
 	});
 });

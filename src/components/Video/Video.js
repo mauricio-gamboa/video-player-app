@@ -68,13 +68,15 @@ class Video extends React.Component {
 	render() {
 		return (
 			<div className='video'>
-				<div className='metaData'>
-					<i className='fas fa-music' />
-					{' '}
-					{`Playing ${this.props.metaData.title} by ${this.props.metaData.artist}`}
-					{' '}
-					<i className='fas fa-music' />
-				</div>
+				{this.props.metaData &&
+					<div className='metaData'>
+						<i className='fas fa-music' />
+						{' '}
+						{`Playing ${this.props.metaData.title} by ${this.props.metaData.artist}`}
+						{' '}
+						<i className='fas fa-music' />
+					</div>
+				}
 				<div className='videoContainer'>
 					<div id={this.props.id} ref={container => this.container = container} />
 				</div>
