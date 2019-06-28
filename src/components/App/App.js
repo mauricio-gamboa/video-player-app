@@ -57,6 +57,8 @@ function App() {
 
 	return (
 		<div className='app'>
+			<header className='header'>The best video player app!</header>
+			
 			<Form
 				videos={videos}
 				callback={handleSubmit} />
