@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
+// CSS
+import './App.scss';
+
 // Components
 import Form from '../Form/Form';
 import Video from '../Video/Video';
@@ -54,13 +57,17 @@ function App() {
 
 	return (
 		<div className='app'>
-			<p>https://www.youtube.com/watch?v=p7bfOZek9t4</p>
-			<p>https://www.youtube.com/watch?v=QYh6mYIJG2Y</p>
-			<p>https://www.youtube.com/watch?v=ptG2ZhCaflw</p>
-
 			<Form
 				videos={videos}
 				callback={handleSubmit} />
+
+			{!hasVideos &&
+				<div className='empty'>
+					Start adding your favorite videos! 
+					{' '}
+					<i className='fab fa-youtube'></i>
+				</div>
+			}
 
 			{hasVideos &&
 				<Video

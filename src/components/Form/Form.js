@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-// Services
+// CSS
+import './Form.scss';
 
+// Services
 import getVideo from '../../services/api';
 
 function Form(props) {
@@ -67,7 +69,7 @@ function Form(props) {
         const liveErrors = [];
 
         if (!artist) {
-            liveErrors.push('Enter the artist name.');
+            liveErrors.push('Enter the name of the artist.');
         }
 
         if (!title) {
@@ -93,35 +95,53 @@ function Form(props) {
 
     return (
         <form
+            className='form'
             onSubmit={event => handleSubmit(event)}>
-            <fieldset className='box'>
-                <input
-                    type='text'
-                    name='artist'
-                    value={artist}
-                    onChange={event => setArtist(event.target.value)}
-                    placeholder='Artist' />
-            </fieldset>
-            <fieldset className='box'>
-                <input
-                    type='text'
-                    name='title'
-                    value={title}
-                    onChange={event => setTitle(event.target.value)}
-                    placeholder='Title' />
-            </fieldset>
-            <fieldset className='box'>
-                <input
-                    type='url'
-                    name='url'
-                    value={url}
-                    onChange={event => setUrl(event.target.value)}
-                    placeholder='URL of the YouTube Video' />
-            </fieldset>
-            <fieldset className='box'>
-                <button type='submit'>Add to queue!</button>
-            </fieldset>
-            {errors.length > 0 && errors.map((error, index) => <p key={index}>{error}</p>)}
+            <div className='row'>
+                <div className='col'>
+                    <input
+                        className='input'
+                        type='text'
+                        name='title'
+                        value={title}
+                        onChange={event => setTitle(event.target.value)}
+                        placeholder='Title' />
+                </div>
+                <div className='col'>
+                    <input
+                        className='input'
+                        type='text'
+                        name='artist'
+                        value={artist}
+                        onChange={event => setArtist(event.target.value)}
+                        placeholder='Artist' />
+                </div>
+            </div>
+            <div className='row'>
+                <div className='col'>
+                    <input
+                        className='input'
+                        type='url'
+                        name='url'
+                        value={url}
+                        onChange={event => setUrl(event.target.value)}
+                        placeholder='URL of the YouTube Video' />
+                </div>
+            </div>
+            <div className='row'>
+                <div className='col'>
+                    <button className='button' type='submit'>
+                        Add video to the list!
+                        {' '}
+                        <i className='fas fa-list'></i>
+                    </button>
+                </div>
+            </div>
+            {errors.length > 0 &&
+                <div className='errors'>
+                    {errors.map((error, index) => <p key={index}>{`- ${error}`}</p>)}
+                </div>
+            }
         </form>
     );
 }
