@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
 
-// KEY = AIzaSyBikKSktaOVOJp35PAezdVFBEPoikRnmcc
-// https://www.googleapis.com/youtube/v3/videos?part=snippet&id=ptG2ZhCaflw&key=AIzaSyBikKSktaOVOJp35PAezdVFBEPoikRnmcc
-// https://www.youtube.com/watch?v=p7bfOZek9t4
-
 // Components
 import Form from '../Form/Form';
 import Video from '../Video/Video';
@@ -58,7 +54,7 @@ function App() {
 
 			{hasVideos &&
 				<Video
-					id={'video'}
+					id={videos[0].id}
 					videoId={videos[0].id}
 					metaData={videos[0].metaData}
 					onStateChange={onVideoEnd} />

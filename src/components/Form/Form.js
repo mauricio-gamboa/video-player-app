@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
+// Services
+
+import getVideo from '../../services/api';
+
 function Form(props) {
     const [artist, setArtist] = useState('');
     const [title, setTitle] = useState('');
@@ -38,17 +42,10 @@ function Form(props) {
             return;
         }
 
-        const video = await getVideoData(videoId);
-
+        const video = await getVideo(videoId);
+        const videoWithMetaData = insertMetaData(video);
+        props.callback(videoWithMetaData);
         resetForm();
-        props.callback(video);
-    };
-
-    const getVideoData = async id => {
-        const res = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${id}&key=AIzaSyBikKSktaOVOJp35PAezdVFBEPoikRnmcc`);
-        const data = await res.json();
-        insertMetaData(data);
-        return insertMetaData(data);
     };
 
     const insertMetaData = data => {
@@ -124,7 +121,7 @@ function Form(props) {
             <fieldset className='box'>
                 <button type='submit'>Add to queue!</button>
             </fieldset>
-            {errors.length > 0 && errors.map(error => <p>{error}</p>)}
+            {errors.length > 0 && errors.map((error, index) => <p key={index}>{error}</p>)}
         </form>
     );
 }
