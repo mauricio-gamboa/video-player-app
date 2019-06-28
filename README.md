@@ -1,8 +1,25 @@
 # Video Player App! (Optimized for mobile)
 
-Important! Please install the node modules with `npm start` before running the scripts.
+### User story
+A user should be able to create a playlist, add videos to a playlist and play the videos continuously or by choosing from the playlist.
+
+### Details
+Create a simple form with artist, title and video url, which upon submitting would add the selected video to the playlist.
+
+The video player should play continuously (when one video ends another one begins, when the playlist reaches an end it starts from the beginning).
+
+Feel free to use any icons or fonts.
+
+No server implementation should be needed.
+
+### Purpose
+All the implementation is in the hands of candidate. Here we would like to see your abilities in JavaScript, HTML/CSS, UI, Unit testing etc, if you feel the need to focus on a certain area then please feel free to do so. Feel free to use any of these, React, Angular or Vue.js, UI Frameworks, or just write Vanilla JS.
+
+There is some open-endedness which means we can pick up on the strengths and weaknesses.
 
 ## Available Scripts
+
+Important! Please install the node modules with `npm start` before running the scripts.
 
 In the project directory, you can run:
 
