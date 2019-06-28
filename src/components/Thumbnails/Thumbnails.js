@@ -8,7 +8,7 @@ function Thumbnails(props) {
         <div className='thumbnails'>
             {props.videos && props.videos.length > 0 && props.videos.map((video, index) => {
                 if (index === 0) {
-                    return null
+                    return null;
                 }
 
                 const title = `${video.metaData.title} by ${video.metaData.artist}`;
